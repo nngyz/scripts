@@ -1,99 +1,46 @@
-// Sub-Store 节点 IP 替换脚本
-// 更换入口 IP 时，只修改 ipMap 中的 ip 和 tag，其他逻辑保持不变。
-function operator(proxies = []) {
+// Sub-Store：presntp.uk 入口替换脚本
+// 按花云.js 风格编写：匹配 server，复制节点并更换入口 IP。
+// $arguments.lang=en 时使用英文标签，否则使用中文标签。
+function operator(proxies) {
+  const args = $arguments ?? {}
+  const lang = args.lang === 'en' ? 'en' : 'zh'
+
   const ipMap = {
-    // 国内入口
-    "p-s2.presntp.uk": [
-      { ip: "103.109.23.144", tag: "深电" },
-      { ip: "183.61.173.36", tag: "广电" }
+    // 仅使用国内入口
+    'p-s2.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT'],
+      ['183.61.173.36', '广电', 'GDCT']
+    ],
+    'p-gtm.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT'],
+      ['183.61.173.36', '广电', 'GDCT']
+    ],
+    'p-gtm-l.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT'],
+      ['183.61.173.36', '广电', 'GDCT']
     ],
 
-    "p-gtm.presntp.uk": [
-      { ip: "103.109.23.144", tag: "深电" },
-      { ip: "183.61.173.36", tag: "广电" }
+    // 仅使用国内入口
+    'p-s3.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT'],
+      ['183.61.173.36', '广电', 'GDCT']
     ],
-
-    "p-gtm-l.presntp.uk": [
-      { ip: "103.109.23.144", tag: "深电" },
-      { ip: "183.61.173.36", tag: "广电" }
-    ],
-
-    // 海外 S1 入口：日本、新加坡
-    "p-s1-hk.presntp.uk": [
-      { ip: "35.79.224.152", tag: "日" },
-      { ip: "35.77.222.39", tag: "日" },
-      { ip: "54.238.166.23", tag: "日" },
-      { ip: "52.68.9.20", tag: "日" },
-      { ip: "56.10.137.25", tag: "新" },
-      { ip: "47.129.209.169", tag: "新" },
-      { ip: "13.212.30.91", tag: "新" }
-    ],
-
-    "p-s1-sg.presntp.uk": [
-      { ip: "35.79.224.152", tag: "日" },
-      { ip: "35.77.222.39", tag: "日" },
-      { ip: "54.238.166.23", tag: "日" },
-      { ip: "52.68.9.20", tag: "日" },
-      { ip: "56.10.137.25", tag: "新" },
-      { ip: "47.129.209.169", tag: "新" },
-      { ip: "13.212.30.91", tag: "新" }
-    ],
-
-    "p-s1-jp.presntp.uk": [
-      { ip: "35.79.224.152", tag: "日" },
-      { ip: "35.77.222.39", tag: "日" },
-      { ip: "54.238.166.23", tag: "日" },
-      { ip: "52.68.9.20", tag: "日" },
-      { ip: "56.10.137.25", tag: "新" },
-      { ip: "47.129.209.169", tag: "新" },
-      { ip: "13.212.30.91", tag: "新" }
-    ],
-
-    "p-s1-us.presntp.uk": [
-      { ip: "35.79.224.152", tag: "日" },
-      { ip: "35.77.222.39", tag: "日" },
-      { ip: "54.238.166.23", tag: "日" },
-      { ip: "52.68.9.20", tag: "日" },
-      { ip: "56.10.137.25", tag: "新" },
-      { ip: "47.129.209.169", tag: "新" },
-      { ip: "13.212.30.91", tag: "新" }
-    ],
-
-    // 海外 S3 / S4 入口：香港
-    "p-s3.presntp.uk": [
-      { ip: "35.220.141.198", tag: "港" },
-      { ip: "35.220.224.14", tag: "港" },
-      { ip: "34.92.194.56", tag: "港" },
-      { ip: "34.96.165.72", tag: "港" },
-      { ip: "34.96.199.38", tag: "港" }
-    ],
-
-    "p-s4.presntp.uk": [
-      { ip: "35.220.141.198", tag: "港" },
-      { ip: "35.220.224.14", tag: "港" },
-      { ip: "34.92.194.56", tag: "港" },
-      { ip: "34.96.165.72", tag: "港" },
-      { ip: "34.96.199.38", tag: "港" }
+    'p-s4.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT'],
+      ['183.61.173.36', '广电', 'GDCT']
     ]
-  };
-
-  const result = [];
-
-  for (const proxy of proxies) {
-    const entries = ipMap[proxy.server];
-
-    if (!entries) {
-      result.push(proxy);
-      continue;
-    }
-
-    for (const entry of entries) {
-      const cloned = { ...proxy };
-      cloned.name = `${proxy.name} [${entry.tag}]`;
-      cloned.server = entry.ip;
-      result.push(cloned);
-    }
   }
 
-  return result;
+  return (proxies || []).flatMap(template => {
+    const entries = ipMap[template?.server]
+
+    // 未匹配域名的节点原样保留
+    if (!entries) return [template]
+
+    return entries.map(([ip, zh, code]) => ({
+      ...template,
+      server: ip,
+      name: `${template.name} [${lang === 'zh' ? zh : code}]`
+    }))
+  })
 }
