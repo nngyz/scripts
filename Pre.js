@@ -15,7 +15,7 @@ function operator(proxies) {
       ['103.109.23.144', '深电', 'SZCT'],
       ['183.61.173.36', '广电', 'GDCT']
     ],
-    'p-gtm-l.presntp.uk': [
+    'p-gtm5.presntp.uk': [
       ['103.109.23.144', '深电', 'SZCT'],
       ['183.61.173.36', '广电', 'GDCT']
     ],
