@@ -1,33 +1,22 @@
-// Sub-Store：presntp.uk 入口替换脚本
-// 按花云.js 风格编写：匹配 server，复制节点并更换入口 IP。
-// $arguments.lang=en 时使用英文标签，否则使用中文标签。
 function operator(proxies) {
   const args = $arguments ?? {}
   const lang = args.lang === 'en' ? 'en' : 'zh'
 
   const ipMap = {
-    // 仅使用国内入口
     'p-s2.presntp.uk': [
-      ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['103.109.23.144', '深电', 'SZCT']
     ],
-    'p-gtm.presntp.uk': [
-      ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
-    ],
-    'p-gtm5.presntp.uk': [
-      ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
-    ],
-
-    // 仅使用国内入口
     'p-s3.presntp.uk': [
-      ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['103.109.23.144', '深电', 'SZCT']
     ],
     'p-s4.presntp.uk': [
-      ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['103.109.23.144', '深电', 'SZCT']
+    ],
+    'p-gtm.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT']
+    ],
+    'p-gtm5.presntp.uk': [
+      ['103.109.23.144', '深电', 'SZCT']
     ]
   }
 
