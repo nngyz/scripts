@@ -1,4 +1,3 @@
-
 function operator(proxies) {
   const args = $arguments ?? {}
   const lang = args.lang === 'en' ? 'en' : 'zh'
@@ -6,23 +5,23 @@ function operator(proxies) {
   const ipMap = {
     'p-s2.presntp.uk': [
       ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['27.44.141.233', '联通', 'GDCU']
     ],
     'p-s3.presntp.uk': [
       ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['27.44.141.233', '联通', 'GDCU']
     ],
     'p-s4.presntp.uk': [
       ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['27.44.141.233', '联通', 'GDCU']
     ],
     'p-gtm.presntp.uk': [
       ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['27.44.141.233', '联通', 'GDCU']
     ],
     'p-gtm5.presntp.uk': [
       ['103.109.23.144', '深电', 'SZCT'],
-      ['183.61.173.36', '广电', 'GDCT']
+      ['27.44.141.233', '联通', 'GDCU']
     ]
   }
 
